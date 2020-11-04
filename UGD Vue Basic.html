@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UGD8_D_9802</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="vue.js"></script>
+    
+    <!-- <style>
+        input[type=number] 
+        {
+          -moz-appearance: textfield;
+        }
+    </style> -->
+
+</head>
+<header style="background: burlywood;">
+    <h1 style="text-align: center; padding-top: 5%; color: aqua;"> UGD8 TEBAK ANGKA </h1>
+</header>
+<body style="background-color: aqua;">
+    <div id="app">
+        <div class="d-flex justify-content-center">
+            <div class="card border-primary my-5">
+                <div class="card-header">Main Tebak angka</div>
+                <div class="card-body text-primary">
+                    <input type="number" class="form-control" v-model="tebakAngka" :disabled="isDisabled"/>
+                    <br>
+                    <button class="btn btn-primary btn-sm"  @click="tebak" :disabled="isDisabled">Tebak</button>
+                    <br>
+                    Kesempatan : {{ kesempatan }}
+                </div>
+            </div>
+        </div>
+        <div class="text-center" v-show="benar">
+            <p>Tebakan Benar </p> 
+            <button class="btn btn-primary" @click="main" >Main lagi, yok!</button>
+        </div>
+       
+        <div class="text-center" v-show="salah">
+            <p>salah, kesempatanmu tinggal {{ kesempatan }} </p> 
+            <button class="btn btn-warning" @click="coba" >tebak lagi!</button>
+        </div>
+
+        <div class="text-center" v-show="kalah" >
+            <p> {{ kesempatan }} kesempatan, jadinya kalah nih!</p> 
+            <button class="btn btn-primary" style="background: red;" @click="main" >ulang lagi!</button>
+        </div>
+
+        <p style="margin-left: 45%; color: aqua;">jawaban bener = {{ angka }}</p> 
+        <footer class="text-center" style="padding-top: 15%; ">
+            {{ `${id.nama} | ${id.npm} | ${id.kelas}` }}
+        </footer>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            angka: Math.floor(Math.random() * 5)+5,
+            tebakan:0,
+            kesempatan:3,
+            salah:undefined,
+            benar:undefined,
+            kalah:undefined,
+            isDisabled:false,
+            id: {
+                nama:'Yehezkiel Yoel Darmodjo',
+                npm: '180709802',
+                kelas: 'PAW D',
+            },
+        },
+        methods: {
+           tebak(){
+            if(this.tebakAngka == this.angka){
+                this.benar = 1;
+            }else {
+                    this.salah =1;
+                    this.isDisabled = true;
+                    this.kesempatan--;
+                    if(this.kesempatan==0){
+                        this.kalah=1;
+                        this.salah = undefined;
+                    }
+            }
+               
+           },
+           coba(){
+                this.isDisabled = false;
+                this.salah = undefined;
+           },
+           main(){
+               location.reload();
+           }
+        },
+ 
+    });
+</script>
+</html>
