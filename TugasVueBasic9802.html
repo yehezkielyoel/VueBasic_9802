@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>TGS VUE BASIC</title>
+  <script src="vue.js"></script>
+  
+</head>
+<body>
+    <div id="app">
+      <div class="d-flex justify-content-center">
+          <div class=" col-md-4 col-sm-12 mb-3 mt-4">
+              <div class="card-body bg-light mt-4">
+                <h1 align="center">{{ judul }}</h1>
+                    
+                  <div class="field">
+                        <label>Kegiatan apa yang ingin kamu lakukan?<label>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="masukan kegiatan" id="aktivitas" v-model="aktivitas">
+                        </div>
+                    </div>
+
+                    <div class="field" >
+                        <label >Kegiatannya Penting?</label>
+                            <div class="control" >
+                                <div class="select" v-model="prioritas">
+                                <select name="jenisPengiriman" id="prioritas" v-model="prioritas"> 
+                                    <option value="Penting">Penting</option>
+                                    <option value="Biasa">Biasa</option>
+                                    <option value="Tidak Penting">Tidak Penting</option>
+                                </select>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Keterangan Kegiatan</label>
+                        <div class="columns">
+                            <div class="column" id="left">
+                                <div class="field">
+                                    <div class="control">
+                                        <textarea class="textarea" type="textarea" placeholder="insert kegiatan" id="Informasi" v-model="informasi"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn btn-primary btn-sm" style="background-color: brown;" name="add" @click="addData()">Submit</button>
+                        <button class="btn btn-danger btn-sm" style="background-color: blueviolet;" name="cancel" @click="cancelData()">Cancel</button>
+                    </div>
+              </div>
+              <div class="card-body border">
+                <ul v-for="(data, index) in rows" class="mt-1 mr-5">
+                    <div class="columns border bg-light" align="center">
+                                <span v-if ="data.prioritas == 'Penting'"> 
+                                    <label class="bg-danger">{{data.prioritas}}</label>
+                                </span>
+                                <span v-else-if ="data.prioritas == 'Biasa'"> 
+                                    <label class="bg-primary">{{data.prioritas}}</label>
+                                </span>
+                                <span v-else>
+                                    <label class="bg-success">{{data.prioritas}}</label> 
+                                </span>
+                            <h6 style="color: black;"><b> {{data.nama}} </b></h6>
+                            <p style="color: black;">{{data.informasi}}</p>
+                            <button class="btn btn-danger btn-sm" name="cancel" @click="deleteData(index)">Delete</button>
+                    </div>
+                </ul>
+              </div>
+              <br>
+          </div>
+      </div>
+      <br>
+        <footer>
+          <h6 align="center">{{ nama }} | {{ npm }} | {{ kelas }}</h6>
+        </footer>
+    </div>
+    
+</body>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            rows:[],
+            judul: "To Do List",
+            nama: "Yehezkiel Yoel Darmodjo",
+            npm: "180709802",
+            kelas: "D",
+            informasi:'',
+            aktivitas:'',
+            prioritas:''
+        },
+        methods: {
+            addData(){
+               if(this.informasi == '' || this.aktivitas == ''||this.prioritas == '')
+               {
+                   alert("Data Belom Terisi!!");
+               }else{
+                   this.rows.push({
+                   nama: this.aktivitas,
+                   prioritas : this.prioritas,
+                   informasi : this.informasi
+                    })
+                    this.aktivitas ='';
+                    this.informasi='';
+                    this.prioritas='';
+               }
+           },
+           cancelData(){
+                this.aktivitas ='';
+                this.informasi='';
+                this.prioritas='';
+            },
+            deleteData(index){
+                this. rows.splice(index, 1)
+            }
+        },
+    })
+</script>
+
+<style>
+    body{
+        background-color: aquamarine;
+        min-height: 100vh;
+        background-size: cover;
+      }
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: darkseagreen;
+        text-align: center;
+        color: black;
+        }
+    </style>
+</html>
